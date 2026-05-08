@@ -1,7 +1,5 @@
 package com.andres.serverless_java_products_api.dto;
 
-import org.springframework.beans.factory.aot.InstanceSupplierCodeGenerator;
-
 import java.math.BigDecimal;
 import java.time.Instant;
 

@@ -25,9 +25,8 @@ public class Product {
         return id;
     }
 
-    public Product setId(String id) {
+    public void setId(String id) {
         this.id = id;
-        return this;
     }
 
     @DynamoDbAttribute("name")
@@ -35,9 +34,8 @@ public class Product {
         return name;
     }
 
-    public Product setName(String name) {
+    public void setName(String name) {
         this.name = name;
-        return this;
     }
 
     @DynamoDbAttribute("description")
@@ -45,9 +43,8 @@ public class Product {
         return description;
     }
 
-    public Product setDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
-        return this;
     }
 
     @DynamoDbAttribute("price")
@@ -55,9 +52,8 @@ public class Product {
         return price;
     }
 
-    public Product setPrice(BigDecimal price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
-        return this;
     }
 
     @DynamoDbAttribute("stock")
@@ -65,9 +61,8 @@ public class Product {
         return stock;
     }
 
-    public Product setStock(Integer stock) {
+    public void setStock(Integer stock) {
         this.stock = stock;
-        return this;
     }
 
     @DynamoDbAttribute("category")
@@ -75,9 +70,8 @@ public class Product {
         return category;
     }
 
-    public Product setCategory(String category) {
+    public void setCategory(String category) {
         this.category = category;
-        return this;
     }
 
     @DynamoDbAttribute("createdAt")
@@ -85,9 +79,8 @@ public class Product {
         return createdAt;
     }
 
-    public Product setCreatedAt(Instant createdAt) {
+    public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
-        return this;
     }
 
     @DynamoDbAttribute("updatedAt")
@@ -95,8 +88,7 @@ public class Product {
         return updatedAt;
     }
 
-    public Product setUpdatedAt(Instant updatedAt) {
+    public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
-        return this;
     }
 }

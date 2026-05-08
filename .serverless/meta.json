@@ -1,0 +1,2957 @@
+{
+  "C:\\Users\\andre\\Documents\\Serverless-Guru\\serverless-java-products-api\\serverless.yml": {
+    "versionFramework": "4.35.1",
+    "servicePath": "C:\\Users\\andre\\Documents\\Serverless-Guru\\serverless-java-products-api\\serverless.yml",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "service": "serverless-java-products-api",
+      "provider": {
+        "name": "aws",
+        "runtime": "java21",
+        "region": "us-east-1",
+        "stage": "dev",
+        "memorySize": 1024,
+        "timeout": 20,
+        "environment": {
+          "PRODUCTS_TABLE": "serverless-java-products-api-dev-products",
+          "MAIN_CLASS": "com.andres.serverless_java_products_api.ServerlessJavaProductsApiApplication"
+        },
+        "iam": {
+          "role": {
+            "statements": [
+              {
+                "Effect": "Allow",
+                "Action": [
+                  "dynamodb:PutItem",
+                  "dynamodb:GetItem",
+                  "dynamodb:Scan",
+                  "dynamodb:DeleteItem"
+                ],
+                "Resource": "arn:aws:dynamodb:us-east-1:*:table/serverless-java-products-api-dev-products"
+              }
+            ]
+          }
+        },
+        "versionFunctions": true,
+        "compiledCloudFormationTemplate": {
+          "AWSTemplateFormatVersion": "2010-09-09",
+          "Description": "The AWS CloudFormation template for this Serverless application",
+          "Resources": {
+            "CreateProductLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/serverless-java-products-api-dev-createProduct"
+              }
+            },
+            "DeleteProductLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/serverless-java-products-api-dev-deleteProduct"
+              }
+            },
+            "GetProductLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/serverless-java-products-api-dev-getProduct"
+              }
+            },
+            "ListProductLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/serverless-java-products-api-dev-listProduct"
+              }
+            },
+            "UpdateProductLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/serverless-java-products-api-dev-updateProduct"
+              }
+            },
+            "IamRoleLambdaExecution": {
+              "Type": "AWS::IAM::Role",
+              "Properties": {
+                "AssumeRolePolicyDocument": {
+                  "Version": "2012-10-17",
+                  "Statement": [
+                    {
+                      "Effect": "Allow",
+                      "Principal": {
+                        "Service": [
+                          "lambda.amazonaws.com"
+                        ]
+                      },
+                      "Action": [
+                        "sts:AssumeRole"
+                      ]
+                    }
+                  ]
+                },
+                "Policies": [
+                  {
+                    "PolicyName": {
+                      "Fn::Join": [
+                        "-",
+                        [
+                          "serverless-java-products-api",
+                          "dev",
+                          "lambda"
+                        ]
+                      ]
+                    },
+                    "PolicyDocument": {
+                      "Version": "2012-10-17",
+                      "Statement": [
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "logs:CreateLogStream",
+                            "logs:CreateLogGroup",
+                            "logs:TagResource"
+                          ],
+                          "Resource": [
+                            {
+                              "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/serverless-java-products-api-dev*:*"
+                            }
+                          ]
+                        },
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "logs:PutLogEvents"
+                          ],
+                          "Resource": [
+                            {
+                              "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/serverless-java-products-api-dev*:*:*"
+                            }
+                          ]
+                        },
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "dynamodb:PutItem",
+                            "dynamodb:GetItem",
+                            "dynamodb:Scan",
+                            "dynamodb:DeleteItem"
+                          ],
+                          "Resource": "arn:aws:dynamodb:us-east-1:*:table/serverless-java-products-api-dev-products"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "Path": "/",
+                "RoleName": {
+                  "Fn::Join": [
+                    "-",
+                    [
+                      "serverless-java-products-api",
+                      "dev",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      "lambdaRole"
+                    ]
+                  ]
+                }
+              }
+            },
+            "CreateProductLambdaFunction": {
+              "Type": "AWS::Lambda::Function",
+              "Properties": {
+                "Code": {
+                  "S3Bucket": "serverless-framework-deployments-us-east-1-28f5085e-3583",
+                  "S3Key": "serverless/serverless-java-products-api/dev/1778197581931-2026-05-07T23:46:21.931Z/serverless-java-products-api-0.0.1-SNAPSHOT.jar"
+                },
+                "Handler": "org.springframework.cloud.function.adapter.aws.FunctionInvoker",
+                "Runtime": "java21",
+                "FunctionName": "serverless-java-products-api-dev-createProduct",
+                "MemorySize": 1024,
+                "Timeout": 20,
+                "Environment": {
+                  "Variables": {
+                    "PRODUCTS_TABLE": "serverless-java-products-api-dev-products",
+                    "MAIN_CLASS": "com.andres.serverless_java_products_api.ServerlessJavaProductsApiApplication",
+                    "SPRING_CLOUD_FUNCTION_DEFINITION": "createProduct"
+                  }
+                },
+                "Role": {
+                  "Fn::GetAtt": [
+                    "IamRoleLambdaExecution",
+                    "Arn"
+                  ]
+                }
+              },
+              "DependsOn": [
+                "CreateProductLogGroup"
+              ]
+            },
+            "DeleteProductLambdaFunction": {
+              "Type": "AWS::Lambda::Function",
+              "Properties": {
+                "Code": {
+                  "S3Bucket": "serverless-framework-deployments-us-east-1-28f5085e-3583",
+                  "S3Key": "serverless/serverless-java-products-api/dev/1778197581931-2026-05-07T23:46:21.931Z/serverless-java-products-api-0.0.1-SNAPSHOT.jar"
+                },
+                "Handler": "org.springframework.cloud.function.adapter.aws.FunctionInvoker",
+                "Runtime": "java21",
+                "FunctionName": "serverless-java-products-api-dev-deleteProduct",
+                "MemorySize": 1024,
+                "Timeout": 20,
+                "Environment": {
+                  "Variables": {
+                    "PRODUCTS_TABLE": "serverless-java-products-api-dev-products",
+                    "MAIN_CLASS": "com.andres.serverless_java_products_api.ServerlessJavaProductsApiApplication",
+                    "SPRING_CLOUD_FUNCTION_DEFINITION": "delete"
+                  }
+                },
+                "Role": {
+                  "Fn::GetAtt": [
+                    "IamRoleLambdaExecution",
+                    "Arn"
+                  ]
+                }
+              },
+              "DependsOn": [
+                "DeleteProductLogGroup"
+              ]
+            },
+            "GetProductLambdaFunction": {
+              "Type": "AWS::Lambda::Function",
+              "Properties": {
+                "Code": {
+                  "S3Bucket": "serverless-framework-deployments-us-east-1-28f5085e-3583",
+                  "S3Key": "serverless/serverless-java-products-api/dev/1778197581931-2026-05-07T23:46:21.931Z/serverless-java-products-api-0.0.1-SNAPSHOT.jar"
+                },
+                "Handler": "org.springframework.cloud.function.adapter.aws.FunctionInvoker",
+                "Runtime": "java21",
+                "FunctionName": "serverless-java-products-api-dev-getProduct",
+                "MemorySize": 1024,
+                "Timeout": 20,
+                "Environment": {
+                  "Variables": {
+                    "PRODUCTS_TABLE": "serverless-java-products-api-dev-products",
+                    "MAIN_CLASS": "com.andres.serverless_java_products_api.ServerlessJavaProductsApiApplication",
+                    "SPRING_CLOUD_FUNCTION_DEFINITION": "getProduct"
+                  }
+                },
+                "Role": {
+                  "Fn::GetAtt": [
+                    "IamRoleLambdaExecution",
+                    "Arn"
+                  ]
+                }
+              },
+              "DependsOn": [
+                "GetProductLogGroup"
+              ]
+            },
+            "ListProductLambdaFunction": {
+              "Type": "AWS::Lambda::Function",
+              "Properties": {
+                "Code": {
+                  "S3Bucket": "serverless-framework-deployments-us-east-1-28f5085e-3583",
+                  "S3Key": "serverless/serverless-java-products-api/dev/1778197581931-2026-05-07T23:46:21.931Z/serverless-java-products-api-0.0.1-SNAPSHOT.jar"
+                },
+                "Handler": "org.springframework.cloud.function.adapter.aws.FunctionInvoker",
+                "Runtime": "java21",
+                "FunctionName": "serverless-java-products-api-dev-listProduct",
+                "MemorySize": 1024,
+                "Timeout": 20,
+                "Environment": {
+                  "Variables": {
+                    "PRODUCTS_TABLE": "serverless-java-products-api-dev-products",
+                    "MAIN_CLASS": "com.andres.serverless_java_products_api.ServerlessJavaProductsApiApplication",
+                    "SPRING_CLOUD_FUNCTION_DEFINITION": "getAllProducts"
+                  }
+                },
+                "Role": {
+                  "Fn::GetAtt": [
+                    "IamRoleLambdaExecution",
+                    "Arn"
+                  ]
+                }
+              },
+              "DependsOn": [
+                "ListProductLogGroup"
+              ]
+            },
+            "UpdateProductLambdaFunction": {
+              "Type": "AWS::Lambda::Function",
+              "Properties": {
+                "Code": {
+                  "S3Bucket": "serverless-framework-deployments-us-east-1-28f5085e-3583",
+                  "S3Key": "serverless/serverless-java-products-api/dev/1778197581931-2026-05-07T23:46:21.931Z/serverless-java-products-api-0.0.1-SNAPSHOT.jar"
+                },
+                "Handler": "org.springframework.cloud.function.adapter.aws.FunctionInvoker",
+                "Runtime": "java21",
+                "FunctionName": "serverless-java-products-api-dev-updateProduct",
+                "MemorySize": 1024,
+                "Timeout": 20,
+                "Environment": {
+                  "Variables": {
+                    "PRODUCTS_TABLE": "serverless-java-products-api-dev-products",
+                    "MAIN_CLASS": "com.andres.serverless_java_products_api.ServerlessJavaProductsApiApplication",
+                    "SPRING_CLOUD_FUNCTION_DEFINITION": "updateProduct"
+                  }
+                },
+                "Role": {
+                  "Fn::GetAtt": [
+                    "IamRoleLambdaExecution",
+                    "Arn"
+                  ]
+                }
+              },
+              "DependsOn": [
+                "UpdateProductLogGroup"
+              ]
+            },
+            "CreateProductLambdaVersionSgw4LjeOewv178jQK0ko65EDSLFOHB6wunIJD583MmU": {
+              "Type": "AWS::Lambda::Version",
+              "DeletionPolicy": "Retain",
+              "Properties": {
+                "FunctionName": {
+                  "Ref": "CreateProductLambdaFunction"
+                },
+                "CodeSha256": "KxW4tzRnjBHYoNhL/RvyqlDmOstewg6RYo32D91Vah0="
+              }
+            },
+            "DeleteProductLambdaVersiong0yPBvNiIPA3XWVqEZzUpmaijVswBbwgsSqDxwmjfCc": {
+              "Type": "AWS::Lambda::Version",
+              "DeletionPolicy": "Retain",
+              "Properties": {
+                "FunctionName": {
+                  "Ref": "DeleteProductLambdaFunction"
+                },
+                "CodeSha256": "KxW4tzRnjBHYoNhL/RvyqlDmOstewg6RYo32D91Vah0="
+              }
+            },
+            "GetProductLambdaVersionsquQW001AVor4yThhIzOCUamoe4JzmmF5CgJ83E": {
+              "Type": "AWS::Lambda::Version",
+              "DeletionPolicy": "Retain",
+              "Properties": {
+                "FunctionName": {
+                  "Ref": "GetProductLambdaFunction"
+                },
+                "CodeSha256": "KxW4tzRnjBHYoNhL/RvyqlDmOstewg6RYo32D91Vah0="
+              }
+            },
+            "ListProductLambdaVersionxTn28B5UnxOCwAN8W6tMrKkKkzl7TiIeUV0gMeCApU": {
+              "Type": "AWS::Lambda::Version",
+              "DeletionPolicy": "Retain",
+              "Properties": {
+                "FunctionName": {
+                  "Ref": "ListProductLambdaFunction"
+                },
+                "CodeSha256": "KxW4tzRnjBHYoNhL/RvyqlDmOstewg6RYo32D91Vah0="
+              }
+            },
+            "UpdateProductLambdaVersionPqrcyZVo3j3aaWv60AR7salszDu1wBfMIzMgWZ38F9U": {
+              "Type": "AWS::Lambda::Version",
+              "DeletionPolicy": "Retain",
+              "Properties": {
+                "FunctionName": {
+                  "Ref": "UpdateProductLambdaFunction"
+                },
+                "CodeSha256": "KxW4tzRnjBHYoNhL/RvyqlDmOstewg6RYo32D91Vah0="
+              }
+            },
+            "ApiGatewayRestApi": {
+              "Type": "AWS::ApiGateway::RestApi",
+              "Properties": {
+                "Name": "dev-serverless-java-products-api",
+                "EndpointConfiguration": {
+                  "Types": [
+                    "EDGE"
+                  ]
+                },
+                "Policy": ""
+              }
+            },
+            "ApiGatewayResourceProducts": {
+              "Type": "AWS::ApiGateway::Resource",
+              "Properties": {
+                "ParentId": {
+                  "Fn::GetAtt": [
+                    "ApiGatewayRestApi",
+                    "RootResourceId"
+                  ]
+                },
+                "PathPart": "products",
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                }
+              }
+            },
+            "ApiGatewayResourceProductsIdVar": {
+              "Type": "AWS::ApiGateway::Resource",
+              "Properties": {
+                "ParentId": {
+                  "Ref": "ApiGatewayResourceProducts"
+                },
+                "PathPart": "{id}",
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                }
+              }
+            },
+            "ApiGatewayMethodProductsPost": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "HttpMethod": "POST",
+                "RequestParameters": {},
+                "ResourceId": {
+                  "Ref": "ApiGatewayResourceProducts"
+                },
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                },
+                "ApiKeyRequired": "<REDACTED>",
+                "AuthorizationType": "NONE",
+                "Integration": {
+                  "IntegrationHttpMethod": "POST",
+                  "Type": "AWS_PROXY",
+                  "Uri": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition"
+                        },
+                        ":apigateway:",
+                        {
+                          "Ref": "AWS::Region"
+                        },
+                        ":lambda:path/2015-03-31/functions/",
+                        {
+                          "Fn::GetAtt": [
+                            "CreateProductLambdaFunction",
+                            "Arn"
+                          ]
+                        },
+                        "/invocations"
+                      ]
+                    ]
+                  }
+                },
+                "MethodResponses": []
+              },
+              "DependsOn": [
+                "CreateProductLambdaPermissionApiGateway"
+              ]
+            },
+            "ApiGatewayMethodProductsIdVarDelete": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "HttpMethod": "DELETE",
+                "RequestParameters": {},
+                "ResourceId": {
+                  "Ref": "ApiGatewayResourceProductsIdVar"
+                },
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                },
+                "ApiKeyRequired": "<REDACTED>",
+                "AuthorizationType": "NONE",
+                "Integration": {
+                  "IntegrationHttpMethod": "POST",
+                  "Type": "AWS_PROXY",
+                  "Uri": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition"
+                        },
+                        ":apigateway:",
+                        {
+                          "Ref": "AWS::Region"
+                        },
+                        ":lambda:path/2015-03-31/functions/",
+                        {
+                          "Fn::GetAtt": [
+                            "DeleteProductLambdaFunction",
+                            "Arn"
+                          ]
+                        },
+                        "/invocations"
+                      ]
+                    ]
+                  }
+                },
+                "MethodResponses": []
+              },
+              "DependsOn": [
+                "DeleteProductLambdaPermissionApiGateway"
+              ]
+            },
+            "ApiGatewayMethodProductsIdVarGet": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "HttpMethod": "GET",
+                "RequestParameters": {},
+                "ResourceId": {
+                  "Ref": "ApiGatewayResourceProductsIdVar"
+                },
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                },
+                "ApiKeyRequired": "<REDACTED>",
+                "AuthorizationType": "NONE",
+                "Integration": {
+                  "IntegrationHttpMethod": "POST",
+                  "Type": "AWS_PROXY",
+                  "Uri": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition"
+                        },
+                        ":apigateway:",
+                        {
+                          "Ref": "AWS::Region"
+                        },
+                        ":lambda:path/2015-03-31/functions/",
+                        {
+                          "Fn::GetAtt": [
+                            "GetProductLambdaFunction",
+                            "Arn"
+                          ]
+                        },
+                        "/invocations"
+                      ]
+                    ]
+                  }
+                },
+                "MethodResponses": []
+              },
+              "DependsOn": [
+                "GetProductLambdaPermissionApiGateway"
+              ]
+            },
+            "ApiGatewayMethodProductsGet": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "HttpMethod": "GET",
+                "RequestParameters": {},
+                "ResourceId": {
+                  "Ref": "ApiGatewayResourceProducts"
+                },
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                },
+                "ApiKeyRequired": "<REDACTED>",
+                "AuthorizationType": "NONE",
+                "Integration": {
+                  "IntegrationHttpMethod": "POST",
+                  "Type": "AWS_PROXY",
+                  "Uri": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition"
+                        },
+                        ":apigateway:",
+                        {
+                          "Ref": "AWS::Region"
+                        },
+                        ":lambda:path/2015-03-31/functions/",
+                        {
+                          "Fn::GetAtt": [
+                            "ListProductLambdaFunction",
+                            "Arn"
+                          ]
+                        },
+                        "/invocations"
+                      ]
+                    ]
+                  }
+                },
+                "MethodResponses": []
+              },
+              "DependsOn": [
+                "ListProductLambdaPermissionApiGateway"
+              ]
+            },
+            "ApiGatewayMethodProductsIdVarPatch": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "HttpMethod": "PATCH",
+                "RequestParameters": {},
+                "ResourceId": {
+                  "Ref": "ApiGatewayResourceProductsIdVar"
+                },
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                },
+                "ApiKeyRequired": "<REDACTED>",
+                "AuthorizationType": "NONE",
+                "Integration": {
+                  "IntegrationHttpMethod": "POST",
+                  "Type": "AWS_PROXY",
+                  "Uri": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition"
+                        },
+                        ":apigateway:",
+                        {
+                          "Ref": "AWS::Region"
+                        },
+                        ":lambda:path/2015-03-31/functions/",
+                        {
+                          "Fn::GetAtt": [
+                            "UpdateProductLambdaFunction",
+                            "Arn"
+                          ]
+                        },
+                        "/invocations"
+                      ]
+                    ]
+                  }
+                },
+                "MethodResponses": []
+              },
+              "DependsOn": [
+                "UpdateProductLambdaPermissionApiGateway"
+              ]
+            },
+            "ApiGatewayDeployment1778197577480": {
+              "Type": "AWS::ApiGateway::Deployment",
+              "Properties": {
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                },
+                "StageName": "dev"
+              },
+              "DependsOn": [
+                "ApiGatewayMethodProductsPost",
+                "ApiGatewayMethodProductsIdVarDelete",
+                "ApiGatewayMethodProductsIdVarGet",
+                "ApiGatewayMethodProductsGet",
+                "ApiGatewayMethodProductsIdVarPatch"
+              ]
+            },
+            "CreateProductLambdaPermissionApiGateway": {
+              "Type": "AWS::Lambda::Permission",
+              "Properties": {
+                "FunctionName": {
+                  "Fn::GetAtt": [
+                    "CreateProductLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "apigateway.amazonaws.com",
+                "SourceArn": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "/*/*"
+                    ]
+                  ]
+                }
+              }
+            },
+            "DeleteProductLambdaPermissionApiGateway": {
+              "Type": "AWS::Lambda::Permission",
+              "Properties": {
+                "FunctionName": {
+                  "Fn::GetAtt": [
+                    "DeleteProductLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "apigateway.amazonaws.com",
+                "SourceArn": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "/*/*"
+                    ]
+                  ]
+                }
+              }
+            },
+            "GetProductLambdaPermissionApiGateway": {
+              "Type": "AWS::Lambda::Permission",
+              "Properties": {
+                "FunctionName": {
+                  "Fn::GetAtt": [
+                    "GetProductLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "apigateway.amazonaws.com",
+                "SourceArn": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "/*/*"
+                    ]
+                  ]
+                }
+              }
+            },
+            "ListProductLambdaPermissionApiGateway": {
+              "Type": "AWS::Lambda::Permission",
+              "Properties": {
+                "FunctionName": {
+                  "Fn::GetAtt": [
+                    "ListProductLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "apigateway.amazonaws.com",
+                "SourceArn": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "/*/*"
+                    ]
+                  ]
+                }
+              }
+            },
+            "UpdateProductLambdaPermissionApiGateway": {
+              "Type": "AWS::Lambda::Permission",
+              "Properties": {
+                "FunctionName": {
+                  "Fn::GetAtt": [
+                    "UpdateProductLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "apigateway.amazonaws.com",
+                "SourceArn": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "/*/*"
+                    ]
+                  ]
+                }
+              }
+            },
+            "ProductsTable": {
+              "Type": "AWS::DynamoDB::Table",
+              "Properties": {
+                "TableName": "serverless-java-products-api-dev-products",
+                "BillingMode": "PAY_PER_REQUEST",
+                "AttributeDefinitions": [
+                  {
+                    "AttributeName": "id",
+                    "AttributeType": "S"
+                  }
+                ],
+                "KeySchema": [
+                  {
+                    "AttributeName": "id",
+                    "KeyType": "HASH"
+                  }
+                ]
+              }
+            }
+          },
+          "Outputs": {
+            "ServerlessDeploymentBucketName": {
+              "Value": "serverless-framework-deployments-us-east-1-28f5085e-3583",
+              "Export": {
+                "Name": "sls-serverless-java-products-api-dev-ServerlessDeploymentBucketName"
+              }
+            },
+            "CreateProductLambdaFunctionQualifiedArn": {
+              "Description": "Current Lambda function version",
+              "Value": {
+                "Ref": "CreateProductLambdaVersionSgw4LjeOewv178jQK0ko65EDSLFOHB6wunIJD583MmU"
+              },
+              "Export": {
+                "Name": "sls-serverless-java-products-api-dev-CreateProductLambdaFunctionQualifiedArn"
+              }
+            },
+            "DeleteProductLambdaFunctionQualifiedArn": {
+              "Description": "Current Lambda function version",
+              "Value": {
+                "Ref": "DeleteProductLambdaVersiong0yPBvNiIPA3XWVqEZzUpmaijVswBbwgsSqDxwmjfCc"
+              },
+              "Export": {
+                "Name": "sls-serverless-java-products-api-dev-DeleteProductLambdaFunctionQualifiedArn"
+              }
+            },
+            "GetProductLambdaFunctionQualifiedArn": {
+              "Description": "Current Lambda function version",
+              "Value": {
+                "Ref": "GetProductLambdaVersionsquQW001AVor4yThhIzOCUamoe4JzmmF5CgJ83E"
+              },
+              "Export": {
+                "Name": "sls-serverless-java-products-api-dev-GetProductLambdaFunctionQualifiedArn"
+              }
+            },
+            "ListProductLambdaFunctionQualifiedArn": {
+              "Description": "Current Lambda function version",
+              "Value": {
+                "Ref": "ListProductLambdaVersionxTn28B5UnxOCwAN8W6tMrKkKkzl7TiIeUV0gMeCApU"
+              },
+              "Export": {
+                "Name": "sls-serverless-java-products-api-dev-ListProductLambdaFunctionQualifiedArn"
+              }
+            },
+            "UpdateProductLambdaFunctionQualifiedArn": {
+              "Description": "Current Lambda function version",
+              "Value": {
+                "Ref": "UpdateProductLambdaVersionPqrcyZVo3j3aaWv60AR7salszDu1wBfMIzMgWZ38F9U"
+              },
+              "Export": {
+                "Name": "sls-serverless-java-products-api-dev-UpdateProductLambdaFunctionQualifiedArn"
+              }
+            },
+            "ServiceEndpoint": {
+              "Description": "URL of the service endpoint",
+              "Value": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "https://",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    ".execute-api.",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ".",
+                    {
+                      "Ref": "AWS::URLSuffix"
+                    },
+                    "/dev"
+                  ]
+                ]
+              },
+              "Export": {
+                "Name": "sls-serverless-java-products-api-dev-ServiceEndpoint"
+              }
+            }
+          }
+        },
+        "vpc": {}
+      },
+      "package": {
+        "artifact": "target/serverless-java-products-api-0.0.1-SNAPSHOT.jar",
+        "artifactsS3KeyDirname": "serverless/serverless-java-products-api/dev/code-artifacts",
+        "deploymentBucket": "serverless-framework-deployments-us-east-1-28f5085e-3583",
+        "artifactDirectoryName": "serverless/serverless-java-products-api/dev/1778197581931-2026-05-07T23:46:21.931Z"
+      },
+      "functions": {
+        "createProduct": {
+          "handler": "org.springframework.cloud.function.adapter.aws.FunctionInvoker",
+          "events": [
+            {
+              "http": {
+                "path": "products",
+                "method": "post",
+                "integration": "AWS_PROXY"
+              }
+            }
+          ],
+          "environment": {
+            "SPRING_CLOUD_FUNCTION_DEFINITION": "createProduct"
+          },
+          "name": "serverless-java-products-api-dev-createProduct",
+          "package": {},
+          "memory": 1024,
+          "timeout": 20,
+          "runtime": "java21",
+          "vpc": {},
+          "versionLogicalId": "CreateProductLambdaVersionSgw4LjeOewv178jQK0ko65EDSLFOHB6wunIJD583MmU"
+        },
+        "deleteProduct": {
+          "handler": "org.springframework.cloud.function.adapter.aws.FunctionInvoker",
+          "events": [
+            {
+              "http": {
+                "path": "products/{id}",
+                "method": "delete",
+                "integration": "AWS_PROXY"
+              }
+            }
+          ],
+          "environment": {
+            "SPRING_CLOUD_FUNCTION_DEFINITION": "delete"
+          },
+          "name": "serverless-java-products-api-dev-deleteProduct",
+          "package": {},
+          "memory": 1024,
+          "timeout": 20,
+          "runtime": "java21",
+          "vpc": {},
+          "versionLogicalId": "DeleteProductLambdaVersiong0yPBvNiIPA3XWVqEZzUpmaijVswBbwgsSqDxwmjfCc"
+        },
+        "getProduct": {
+          "handler": "org.springframework.cloud.function.adapter.aws.FunctionInvoker",
+          "events": [
+            {
+              "http": {
+                "path": "products/{id}",
+                "method": "get",
+                "integration": "AWS_PROXY"
+              }
+            }
+          ],
+          "environment": {
+            "SPRING_CLOUD_FUNCTION_DEFINITION": "getProduct"
+          },
+          "name": "serverless-java-products-api-dev-getProduct",
+          "package": {},
+          "memory": 1024,
+          "timeout": 20,
+          "runtime": "java21",
+          "vpc": {},
+          "versionLogicalId": "GetProductLambdaVersionsquQW001AVor4yThhIzOCUamoe4JzmmF5CgJ83E"
+        },
+        "listProduct": {
+          "handler": "org.springframework.cloud.function.adapter.aws.FunctionInvoker",
+          "events": [
+            {
+              "http": {
+                "path": "products",
+                "method": "get",
+                "integration": "AWS_PROXY"
+              }
+            }
+          ],
+          "environment": {
+            "SPRING_CLOUD_FUNCTION_DEFINITION": "getAllProducts"
+          },
+          "name": "serverless-java-products-api-dev-listProduct",
+          "package": {},
+          "memory": 1024,
+          "timeout": 20,
+          "runtime": "java21",
+          "vpc": {},
+          "versionLogicalId": "ListProductLambdaVersionxTn28B5UnxOCwAN8W6tMrKkKkzl7TiIeUV0gMeCApU"
+        },
+        "updateProduct": {
+          "handler": "org.springframework.cloud.function.adapter.aws.FunctionInvoker",
+          "events": [
+            {
+              "http": {
+                "path": "products/{id}",
+                "method": "patch",
+                "integration": "AWS_PROXY"
+              }
+            }
+          ],
+          "environment": {
+            "SPRING_CLOUD_FUNCTION_DEFINITION": "updateProduct"
+          },
+          "name": "serverless-java-products-api-dev-updateProduct",
+          "package": {},
+          "memory": 1024,
+          "timeout": 20,
+          "runtime": "java21",
+          "vpc": {},
+          "versionLogicalId": "UpdateProductLambdaVersionPqrcyZVo3j3aaWv60AR7salszDu1wBfMIzMgWZ38F9U"
+        }
+      },
+      "resources": {
+        "Resources": {
+          "ProductsTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+              "TableName": "serverless-java-products-api-dev-products",
+              "BillingMode": "PAY_PER_REQUEST",
+              "AttributeDefinitions": [
+                {
+                  "AttributeName": "id",
+                  "AttributeType": "S"
+                }
+              ],
+              "KeySchema": [
+                {
+                  "AttributeName": "id",
+                  "KeyType": "HASH"
+                }
+              ]
+            }
+          }
+        },
+        "Outputs": {}
+      }
+    },
+    "provider": {
+      "name": "aws",
+      "runtime": "java21",
+      "region": "us-east-1",
+      "stage": "dev",
+      "memorySize": 1024,
+      "timeout": 20,
+      "environment": {
+        "PRODUCTS_TABLE": "serverless-java-products-api-dev-products",
+        "MAIN_CLASS": "com.andres.serverless_java_products_api.ServerlessJavaProductsApiApplication"
+      },
+      "iam": {
+        "role": {
+          "statements": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:PutItem",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:DeleteItem"
+              ],
+              "Resource": "arn:aws:dynamodb:us-east-1:*:table/serverless-java-products-api-dev-products"
+            }
+          ]
+        }
+      },
+      "versionFunctions": true,
+      "compiledCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "CreateProductLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/serverless-java-products-api-dev-createProduct"
+            }
+          },
+          "DeleteProductLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/serverless-java-products-api-dev-deleteProduct"
+            }
+          },
+          "GetProductLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/serverless-java-products-api-dev-getProduct"
+            }
+          },
+          "ListProductLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/serverless-java-products-api-dev-listProduct"
+            }
+          },
+          "UpdateProductLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/serverless-java-products-api-dev-updateProduct"
+            }
+          },
+          "IamRoleLambdaExecution": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+              "AssumeRolePolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Principal": {
+                      "Service": [
+                        "lambda.amazonaws.com"
+                      ]
+                    },
+                    "Action": [
+                      "sts:AssumeRole"
+                    ]
+                  }
+                ]
+              },
+              "Policies": [
+                {
+                  "PolicyName": {
+                    "Fn::Join": [
+                      "-",
+                      [
+                        "serverless-java-products-api",
+                        "dev",
+                        "lambda"
+                      ]
+                    ]
+                  },
+                  "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:CreateLogStream",
+                          "logs:CreateLogGroup",
+                          "logs:TagResource"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/serverless-java-products-api-dev*:*"
+                          }
+                        ]
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:PutLogEvents"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/serverless-java-products-api-dev*:*:*"
+                          }
+                        ]
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "dynamodb:PutItem",
+                          "dynamodb:GetItem",
+                          "dynamodb:Scan",
+                          "dynamodb:DeleteItem"
+                        ],
+                        "Resource": "arn:aws:dynamodb:us-east-1:*:table/serverless-java-products-api-dev-products"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "Path": "/",
+              "RoleName": {
+                "Fn::Join": [
+                  "-",
+                  [
+                    "serverless-java-products-api",
+                    "dev",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    "lambdaRole"
+                  ]
+                ]
+              }
+            }
+          },
+          "CreateProductLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "serverless-framework-deployments-us-east-1-28f5085e-3583",
+                "S3Key": "serverless/serverless-java-products-api/dev/1778197581931-2026-05-07T23:46:21.931Z/serverless-java-products-api-0.0.1-SNAPSHOT.jar"
+              },
+              "Handler": "org.springframework.cloud.function.adapter.aws.FunctionInvoker",
+              "Runtime": "java21",
+              "FunctionName": "serverless-java-products-api-dev-createProduct",
+              "MemorySize": 1024,
+              "Timeout": 20,
+              "Environment": {
+                "Variables": {
+                  "PRODUCTS_TABLE": "serverless-java-products-api-dev-products",
+                  "MAIN_CLASS": "com.andres.serverless_java_products_api.ServerlessJavaProductsApiApplication",
+                  "SPRING_CLOUD_FUNCTION_DEFINITION": "createProduct"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "CreateProductLogGroup"
+            ]
+          },
+          "DeleteProductLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "serverless-framework-deployments-us-east-1-28f5085e-3583",
+                "S3Key": "serverless/serverless-java-products-api/dev/1778197581931-2026-05-07T23:46:21.931Z/serverless-java-products-api-0.0.1-SNAPSHOT.jar"
+              },
+              "Handler": "org.springframework.cloud.function.adapter.aws.FunctionInvoker",
+              "Runtime": "java21",
+              "FunctionName": "serverless-java-products-api-dev-deleteProduct",
+              "MemorySize": 1024,
+              "Timeout": 20,
+              "Environment": {
+                "Variables": {
+                  "PRODUCTS_TABLE": "serverless-java-products-api-dev-products",
+                  "MAIN_CLASS": "com.andres.serverless_java_products_api.ServerlessJavaProductsApiApplication",
+                  "SPRING_CLOUD_FUNCTION_DEFINITION": "delete"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "DeleteProductLogGroup"
+            ]
+          },
+          "GetProductLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "serverless-framework-deployments-us-east-1-28f5085e-3583",
+                "S3Key": "serverless/serverless-java-products-api/dev/1778197581931-2026-05-07T23:46:21.931Z/serverless-java-products-api-0.0.1-SNAPSHOT.jar"
+              },
+              "Handler": "org.springframework.cloud.function.adapter.aws.FunctionInvoker",
+              "Runtime": "java21",
+              "FunctionName": "serverless-java-products-api-dev-getProduct",
+              "MemorySize": 1024,
+              "Timeout": 20,
+              "Environment": {
+                "Variables": {
+                  "PRODUCTS_TABLE": "serverless-java-products-api-dev-products",
+                  "MAIN_CLASS": "com.andres.serverless_java_products_api.ServerlessJavaProductsApiApplication",
+                  "SPRING_CLOUD_FUNCTION_DEFINITION": "getProduct"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "GetProductLogGroup"
+            ]
+          },
+          "ListProductLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "serverless-framework-deployments-us-east-1-28f5085e-3583",
+                "S3Key": "serverless/serverless-java-products-api/dev/1778197581931-2026-05-07T23:46:21.931Z/serverless-java-products-api-0.0.1-SNAPSHOT.jar"
+              },
+              "Handler": "org.springframework.cloud.function.adapter.aws.FunctionInvoker",
+              "Runtime": "java21",
+              "FunctionName": "serverless-java-products-api-dev-listProduct",
+              "MemorySize": 1024,
+              "Timeout": 20,
+              "Environment": {
+                "Variables": {
+                  "PRODUCTS_TABLE": "serverless-java-products-api-dev-products",
+                  "MAIN_CLASS": "com.andres.serverless_java_products_api.ServerlessJavaProductsApiApplication",
+                  "SPRING_CLOUD_FUNCTION_DEFINITION": "getAllProducts"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "ListProductLogGroup"
+            ]
+          },
+          "UpdateProductLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "serverless-framework-deployments-us-east-1-28f5085e-3583",
+                "S3Key": "serverless/serverless-java-products-api/dev/1778197581931-2026-05-07T23:46:21.931Z/serverless-java-products-api-0.0.1-SNAPSHOT.jar"
+              },
+              "Handler": "org.springframework.cloud.function.adapter.aws.FunctionInvoker",
+              "Runtime": "java21",
+              "FunctionName": "serverless-java-products-api-dev-updateProduct",
+              "MemorySize": 1024,
+              "Timeout": 20,
+              "Environment": {
+                "Variables": {
+                  "PRODUCTS_TABLE": "serverless-java-products-api-dev-products",
+                  "MAIN_CLASS": "com.andres.serverless_java_products_api.ServerlessJavaProductsApiApplication",
+                  "SPRING_CLOUD_FUNCTION_DEFINITION": "updateProduct"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "UpdateProductLogGroup"
+            ]
+          },
+          "CreateProductLambdaVersionSgw4LjeOewv178jQK0ko65EDSLFOHB6wunIJD583MmU": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "CreateProductLambdaFunction"
+              },
+              "CodeSha256": "KxW4tzRnjBHYoNhL/RvyqlDmOstewg6RYo32D91Vah0="
+            }
+          },
+          "DeleteProductLambdaVersiong0yPBvNiIPA3XWVqEZzUpmaijVswBbwgsSqDxwmjfCc": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "DeleteProductLambdaFunction"
+              },
+              "CodeSha256": "KxW4tzRnjBHYoNhL/RvyqlDmOstewg6RYo32D91Vah0="
+            }
+          },
+          "GetProductLambdaVersionsquQW001AVor4yThhIzOCUamoe4JzmmF5CgJ83E": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "GetProductLambdaFunction"
+              },
+              "CodeSha256": "KxW4tzRnjBHYoNhL/RvyqlDmOstewg6RYo32D91Vah0="
+            }
+          },
+          "ListProductLambdaVersionxTn28B5UnxOCwAN8W6tMrKkKkzl7TiIeUV0gMeCApU": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "ListProductLambdaFunction"
+              },
+              "CodeSha256": "KxW4tzRnjBHYoNhL/RvyqlDmOstewg6RYo32D91Vah0="
+            }
+          },
+          "UpdateProductLambdaVersionPqrcyZVo3j3aaWv60AR7salszDu1wBfMIzMgWZ38F9U": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "UpdateProductLambdaFunction"
+              },
+              "CodeSha256": "KxW4tzRnjBHYoNhL/RvyqlDmOstewg6RYo32D91Vah0="
+            }
+          },
+          "ApiGatewayRestApi": {
+            "Type": "AWS::ApiGateway::RestApi",
+            "Properties": {
+              "Name": "dev-serverless-java-products-api",
+              "EndpointConfiguration": {
+                "Types": [
+                  "EDGE"
+                ]
+              },
+              "Policy": ""
+            }
+          },
+          "ApiGatewayResourceProducts": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Fn::GetAtt": [
+                  "ApiGatewayRestApi",
+                  "RootResourceId"
+                ]
+              },
+              "PathPart": "products",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceProductsIdVar": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceProducts"
+              },
+              "PathPart": "{id}",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayMethodProductsPost": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "POST",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceProducts"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": "<REDACTED>",
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "CreateProductLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            },
+            "DependsOn": [
+              "CreateProductLambdaPermissionApiGateway"
+            ]
+          },
+          "ApiGatewayMethodProductsIdVarDelete": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "DELETE",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceProductsIdVar"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": "<REDACTED>",
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "DeleteProductLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            },
+            "DependsOn": [
+              "DeleteProductLambdaPermissionApiGateway"
+            ]
+          },
+          "ApiGatewayMethodProductsIdVarGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceProductsIdVar"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": "<REDACTED>",
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "GetProductLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            },
+            "DependsOn": [
+              "GetProductLambdaPermissionApiGateway"
+            ]
+          },
+          "ApiGatewayMethodProductsGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceProducts"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": "<REDACTED>",
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "ListProductLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            },
+            "DependsOn": [
+              "ListProductLambdaPermissionApiGateway"
+            ]
+          },
+          "ApiGatewayMethodProductsIdVarPatch": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "PATCH",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceProductsIdVar"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": "<REDACTED>",
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "UpdateProductLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            },
+            "DependsOn": [
+              "UpdateProductLambdaPermissionApiGateway"
+            ]
+          },
+          "ApiGatewayDeployment1778197577480": {
+            "Type": "AWS::ApiGateway::Deployment",
+            "Properties": {
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "StageName": "dev"
+            },
+            "DependsOn": [
+              "ApiGatewayMethodProductsPost",
+              "ApiGatewayMethodProductsIdVarDelete",
+              "ApiGatewayMethodProductsIdVarGet",
+              "ApiGatewayMethodProductsGet",
+              "ApiGatewayMethodProductsIdVarPatch"
+            ]
+          },
+          "CreateProductLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "CreateProductLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "DeleteProductLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "DeleteProductLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "GetProductLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "GetProductLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "ListProductLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "ListProductLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "UpdateProductLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "UpdateProductLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "ProductsTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+              "TableName": "serverless-java-products-api-dev-products",
+              "BillingMode": "PAY_PER_REQUEST",
+              "AttributeDefinitions": [
+                {
+                  "AttributeName": "id",
+                  "AttributeType": "S"
+                }
+              ],
+              "KeySchema": [
+                {
+                  "AttributeName": "id",
+                  "KeyType": "HASH"
+                }
+              ]
+            }
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": "serverless-framework-deployments-us-east-1-28f5085e-3583",
+            "Export": {
+              "Name": "sls-serverless-java-products-api-dev-ServerlessDeploymentBucketName"
+            }
+          },
+          "CreateProductLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "CreateProductLambdaVersionSgw4LjeOewv178jQK0ko65EDSLFOHB6wunIJD583MmU"
+            },
+            "Export": {
+              "Name": "sls-serverless-java-products-api-dev-CreateProductLambdaFunctionQualifiedArn"
+            }
+          },
+          "DeleteProductLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "DeleteProductLambdaVersiong0yPBvNiIPA3XWVqEZzUpmaijVswBbwgsSqDxwmjfCc"
+            },
+            "Export": {
+              "Name": "sls-serverless-java-products-api-dev-DeleteProductLambdaFunctionQualifiedArn"
+            }
+          },
+          "GetProductLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "GetProductLambdaVersionsquQW001AVor4yThhIzOCUamoe4JzmmF5CgJ83E"
+            },
+            "Export": {
+              "Name": "sls-serverless-java-products-api-dev-GetProductLambdaFunctionQualifiedArn"
+            }
+          },
+          "ListProductLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "ListProductLambdaVersionxTn28B5UnxOCwAN8W6tMrKkKkzl7TiIeUV0gMeCApU"
+            },
+            "Export": {
+              "Name": "sls-serverless-java-products-api-dev-ListProductLambdaFunctionQualifiedArn"
+            }
+          },
+          "UpdateProductLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "UpdateProductLambdaVersionPqrcyZVo3j3aaWv60AR7salszDu1wBfMIzMgWZ38F9U"
+            },
+            "Export": {
+              "Name": "sls-serverless-java-products-api-dev-UpdateProductLambdaFunctionQualifiedArn"
+            }
+          },
+          "ServiceEndpoint": {
+            "Description": "URL of the service endpoint",
+            "Value": {
+              "Fn::Join": [
+                "",
+                [
+                  "https://",
+                  {
+                    "Ref": "ApiGatewayRestApi"
+                  },
+                  ".execute-api.",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ".",
+                  {
+                    "Ref": "AWS::URLSuffix"
+                  },
+                  "/dev"
+                ]
+              ]
+            },
+            "Export": {
+              "Name": "sls-serverless-java-products-api-dev-ServiceEndpoint"
+            }
+          }
+        }
+      },
+      "vpc": {}
+    },
+    "dashboard": {
+      "isEnabledForService": false,
+      "requiredAuthentication": false,
+      "orgFeaturesInUse": null,
+      "orgObservabilityIntegrations": null,
+      "serviceAppId": null,
+      "serviceProvider": null,
+      "instanceParameters": null
+    },
+    "serviceRawFile": "service: serverless-java-products-api\r\n\r\nprovider:\r\n  name: aws\r\n  runtime: java21\r\n  region: us-east-1\r\n  stage: ${opt:stage, 'dev'}\r\n\r\n  memorySize: 1024\r\n  timeout: 20\r\n\r\n  environment:\r\n    PRODUCTS_TABLE: ${self:service}-${self:provider.stage}-products\r\n    MAIN_CLASS: com.andres.serverless_java_products_api.ServerlessJavaProductsApiApplication\r\n\r\n  iam:\r\n    role:\r\n      statements:\r\n        - Effect: Allow\r\n          Action:\r\n            - dynamodb:PutItem\r\n            - dynamodb:GetItem\r\n            - dynamodb:Scan\r\n            - dynamodb:DeleteItem\r\n          Resource:\r\n            - arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.PRODUCTS_TABLE}\r\n\r\npackage:\r\n  artifact: target/serverless-java-products-api-0.0.1-SNAPSHOT.jar\r\n\r\nfunctions:\r\n  createProduct:\r\n    handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker\r\n\r\n    events:\r\n      - http:\r\n          path: products\r\n          method: post\r\n\r\n    environment:\r\n      SPRING_CLOUD_FUNCTION_DEFINITION: createProduct\r\n\r\n\r\n  deleteProduct:\r\n    handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker\r\n\r\n    events:\r\n      - http:\r\n          path: products/{id}\r\n          method: delete\r\n\r\n    environment:\r\n      SPRING_CLOUD_FUNCTION_DEFINITION: delete\r\n\r\n  getProduct:\r\n    handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker\r\n\r\n    events:\r\n      - http:\r\n          path: products/{id}\r\n          method: get\r\n\r\n    environment:\r\n      SPRING_CLOUD_FUNCTION_DEFINITION: getProduct\r\n\r\n  listProduct:\r\n    handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker\r\n\r\n    events:\r\n      - http:\r\n          path: products\r\n          method: get\r\n\r\n    environment:\r\n      SPRING_CLOUD_FUNCTION_DEFINITION: getAllProducts\r\n\r\n  updateProduct:\r\n    handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker\r\n\r\n    events:\r\n      - http:\r\n          path: products/{id}\r\n          method: patch\r\n\r\n    environment:\r\n      SPRING_CLOUD_FUNCTION_DEFINITION: updateProduct\r\n\r\n\r\nresources:\r\n  Resources:\r\n    ProductsTable:\r\n      Type: AWS::DynamoDB::Table\r\n\r\n      Properties:\r\n        TableName: ${self:provider.environment.PRODUCTS_TABLE}\r\n\r\n        BillingMode: PAY_PER_REQUEST\r\n\r\n        AttributeDefinitions:\r\n          - AttributeName: id\r\n            AttributeType: S\r\n\r\n        KeySchema:\r\n          - AttributeName: id\r\n            KeyType: HASH",
+    "command": [
+      "deploy"
+    ],
+    "options": {
+      "stage": "dev"
+    },
+    "orgId": "75803c17-a4c9-4ae2-81dd-beb07714975c",
+    "orgName": "andresarredondo9608",
+    "userId": "nYcX6sXzCZ8bstWHxw",
+    "userName": "andresarredondo9608",
+    "serviceProviderAwsAccountId": "918898706436",
+    "serviceProviderAwsCfStackName": "serverless-java-products-api-dev",
+    "serviceProviderAwsCfStackId": "arn:aws:cloudformation:us-east-1:918898706436:stack/serverless-java-products-api-dev/afa1f190-4a49-11f1-acdf-0afff9209de5",
+    "serviceProviderAwsCfStackCreated": "2026-05-07T19:19:36.650Z",
+    "serviceProviderAwsCfStackUpdated": "2026-05-07T23:40:00.299Z",
+    "serviceProviderAwsCfStackStatus": "UPDATE_COMPLETE",
+    "serviceProviderAwsCfStackOutputs": [
+      {
+        "OutputKey": "DeleteProductLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-1:918898706436:function:serverless-java-products-api-dev-deleteProduct:2",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-serverless-java-products-api-dev-DeleteProductLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "ListProductLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-1:918898706436:function:serverless-java-products-api-dev-listProduct:2",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-serverless-java-products-api-dev-ListProductLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "UpdateProductLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-1:918898706436:function:serverless-java-products-api-dev-updateProduct:2",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-serverless-java-products-api-dev-UpdateProductLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "CreateProductLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-1:918898706436:function:serverless-java-products-api-dev-createProduct:8",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-serverless-java-products-api-dev-CreateProductLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "ServiceEndpoint",
+        "OutputValue": "https://alpjgcqa64.execute-api.us-east-1.amazonaws.com/dev",
+        "Description": "URL of the service endpoint",
+        "ExportName": "sls-serverless-java-products-api-dev-ServiceEndpoint"
+      },
+      {
+        "OutputKey": "ServerlessDeploymentBucketName",
+        "OutputValue": "serverless-framework-deployments-us-east-1-28f5085e-3583",
+        "ExportName": "sls-serverless-java-products-api-dev-ServerlessDeploymentBucketName"
+      },
+      {
+        "OutputKey": "GetProductLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-1:918898706436:function:serverless-java-products-api-dev-getProduct:2",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-serverless-java-products-api-dev-GetProductLambdaFunctionQualifiedArn"
+      }
+    ],
+    "compiledCloudFormationTemplate": {
+      "AWSTemplateFormatVersion": "2010-09-09",
+      "Description": "The AWS CloudFormation template for this Serverless application",
+      "Resources": {
+        "CreateProductLogGroup": {
+          "Type": "AWS::Logs::LogGroup",
+          "Properties": {
+            "LogGroupName": "/aws/lambda/serverless-java-products-api-dev-createProduct"
+          }
+        },
+        "DeleteProductLogGroup": {
+          "Type": "AWS::Logs::LogGroup",
+          "Properties": {
+            "LogGroupName": "/aws/lambda/serverless-java-products-api-dev-deleteProduct"
+          }
+        },
+        "GetProductLogGroup": {
+          "Type": "AWS::Logs::LogGroup",
+          "Properties": {
+            "LogGroupName": "/aws/lambda/serverless-java-products-api-dev-getProduct"
+          }
+        },
+        "ListProductLogGroup": {
+          "Type": "AWS::Logs::LogGroup",
+          "Properties": {
+            "LogGroupName": "/aws/lambda/serverless-java-products-api-dev-listProduct"
+          }
+        },
+        "UpdateProductLogGroup": {
+          "Type": "AWS::Logs::LogGroup",
+          "Properties": {
+            "LogGroupName": "/aws/lambda/serverless-java-products-api-dev-updateProduct"
+          }
+        },
+        "IamRoleLambdaExecution": {
+          "Type": "AWS::IAM::Role",
+          "Properties": {
+            "AssumeRolePolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Principal": {
+                    "Service": [
+                      "lambda.amazonaws.com"
+                    ]
+                  },
+                  "Action": [
+                    "sts:AssumeRole"
+                  ]
+                }
+              ]
+            },
+            "Policies": [
+              {
+                "PolicyName": {
+                  "Fn::Join": [
+                    "-",
+                    [
+                      "serverless-java-products-api",
+                      "dev",
+                      "lambda"
+                    ]
+                  ]
+                },
+                "PolicyDocument": {
+                  "Version": "2012-10-17",
+                  "Statement": [
+                    {
+                      "Effect": "Allow",
+                      "Action": [
+                        "logs:CreateLogStream",
+                        "logs:CreateLogGroup",
+                        "logs:TagResource"
+                      ],
+                      "Resource": [
+                        {
+                          "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/serverless-java-products-api-dev*:*"
+                        }
+                      ]
+                    },
+                    {
+                      "Effect": "Allow",
+                      "Action": [
+                        "logs:PutLogEvents"
+                      ],
+                      "Resource": [
+                        {
+                          "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/serverless-java-products-api-dev*:*:*"
+                        }
+                      ]
+                    },
+                    {
+                      "Effect": "Allow",
+                      "Action": [
+                        "dynamodb:PutItem",
+                        "dynamodb:GetItem",
+                        "dynamodb:Scan",
+                        "dynamodb:DeleteItem"
+                      ],
+                      "Resource": "arn:aws:dynamodb:us-east-1:*:table/serverless-java-products-api-dev-products"
+                    }
+                  ]
+                }
+              }
+            ],
+            "Path": "/",
+            "RoleName": {
+              "Fn::Join": [
+                "-",
+                [
+                  "serverless-java-products-api",
+                  "dev",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  "lambdaRole"
+                ]
+              ]
+            }
+          }
+        },
+        "CreateProductLambdaFunction": {
+          "Type": "AWS::Lambda::Function",
+          "Properties": {
+            "Code": {
+              "S3Bucket": "serverless-framework-deployments-us-east-1-28f5085e-3583",
+              "S3Key": "serverless/serverless-java-products-api/dev/1778197581931-2026-05-07T23:46:21.931Z/serverless-java-products-api-0.0.1-SNAPSHOT.jar"
+            },
+            "Handler": "org.springframework.cloud.function.adapter.aws.FunctionInvoker",
+            "Runtime": "java21",
+            "FunctionName": "serverless-java-products-api-dev-createProduct",
+            "MemorySize": 1024,
+            "Timeout": 20,
+            "Environment": {
+              "Variables": {
+                "PRODUCTS_TABLE": "serverless-java-products-api-dev-products",
+                "MAIN_CLASS": "com.andres.serverless_java_products_api.ServerlessJavaProductsApiApplication",
+                "SPRING_CLOUD_FUNCTION_DEFINITION": "createProduct"
+              }
+            },
+            "Role": {
+              "Fn::GetAtt": [
+                "IamRoleLambdaExecution",
+                "Arn"
+              ]
+            }
+          },
+          "DependsOn": [
+            "CreateProductLogGroup"
+          ]
+        },
+        "DeleteProductLambdaFunction": {
+          "Type": "AWS::Lambda::Function",
+          "Properties": {
+            "Code": {
+              "S3Bucket": "serverless-framework-deployments-us-east-1-28f5085e-3583",
+              "S3Key": "serverless/serverless-java-products-api/dev/1778197581931-2026-05-07T23:46:21.931Z/serverless-java-products-api-0.0.1-SNAPSHOT.jar"
+            },
+            "Handler": "org.springframework.cloud.function.adapter.aws.FunctionInvoker",
+            "Runtime": "java21",
+            "FunctionName": "serverless-java-products-api-dev-deleteProduct",
+            "MemorySize": 1024,
+            "Timeout": 20,
+            "Environment": {
+              "Variables": {
+                "PRODUCTS_TABLE": "serverless-java-products-api-dev-products",
+                "MAIN_CLASS": "com.andres.serverless_java_products_api.ServerlessJavaProductsApiApplication",
+                "SPRING_CLOUD_FUNCTION_DEFINITION": "delete"
+              }
+            },
+            "Role": {
+              "Fn::GetAtt": [
+                "IamRoleLambdaExecution",
+                "Arn"
+              ]
+            }
+          },
+          "DependsOn": [
+            "DeleteProductLogGroup"
+          ]
+        },
+        "GetProductLambdaFunction": {
+          "Type": "AWS::Lambda::Function",
+          "Properties": {
+            "Code": {
+              "S3Bucket": "serverless-framework-deployments-us-east-1-28f5085e-3583",
+              "S3Key": "serverless/serverless-java-products-api/dev/1778197581931-2026-05-07T23:46:21.931Z/serverless-java-products-api-0.0.1-SNAPSHOT.jar"
+            },
+            "Handler": "org.springframework.cloud.function.adapter.aws.FunctionInvoker",
+            "Runtime": "java21",
+            "FunctionName": "serverless-java-products-api-dev-getProduct",
+            "MemorySize": 1024,
+            "Timeout": 20,
+            "Environment": {
+              "Variables": {
+                "PRODUCTS_TABLE": "serverless-java-products-api-dev-products",
+                "MAIN_CLASS": "com.andres.serverless_java_products_api.ServerlessJavaProductsApiApplication",
+                "SPRING_CLOUD_FUNCTION_DEFINITION": "getProduct"
+              }
+            },
+            "Role": {
+              "Fn::GetAtt": [
+                "IamRoleLambdaExecution",
+                "Arn"
+              ]
+            }
+          },
+          "DependsOn": [
+            "GetProductLogGroup"
+          ]
+        },
+        "ListProductLambdaFunction": {
+          "Type": "AWS::Lambda::Function",
+          "Properties": {
+            "Code": {
+              "S3Bucket": "serverless-framework-deployments-us-east-1-28f5085e-3583",
+              "S3Key": "serverless/serverless-java-products-api/dev/1778197581931-2026-05-07T23:46:21.931Z/serverless-java-products-api-0.0.1-SNAPSHOT.jar"
+            },
+            "Handler": "org.springframework.cloud.function.adapter.aws.FunctionInvoker",
+            "Runtime": "java21",
+            "FunctionName": "serverless-java-products-api-dev-listProduct",
+            "MemorySize": 1024,
+            "Timeout": 20,
+            "Environment": {
+              "Variables": {
+                "PRODUCTS_TABLE": "serverless-java-products-api-dev-products",
+                "MAIN_CLASS": "com.andres.serverless_java_products_api.ServerlessJavaProductsApiApplication",
+                "SPRING_CLOUD_FUNCTION_DEFINITION": "getAllProducts"
+              }
+            },
+            "Role": {
+              "Fn::GetAtt": [
+                "IamRoleLambdaExecution",
+                "Arn"
+              ]
+            }
+          },
+          "DependsOn": [
+            "ListProductLogGroup"
+          ]
+        },
+        "UpdateProductLambdaFunction": {
+          "Type": "AWS::Lambda::Function",
+          "Properties": {
+            "Code": {
+              "S3Bucket": "serverless-framework-deployments-us-east-1-28f5085e-3583",
+              "S3Key": "serverless/serverless-java-products-api/dev/1778197581931-2026-05-07T23:46:21.931Z/serverless-java-products-api-0.0.1-SNAPSHOT.jar"
+            },
+            "Handler": "org.springframework.cloud.function.adapter.aws.FunctionInvoker",
+            "Runtime": "java21",
+            "FunctionName": "serverless-java-products-api-dev-updateProduct",
+            "MemorySize": 1024,
+            "Timeout": 20,
+            "Environment": {
+              "Variables": {
+                "PRODUCTS_TABLE": "serverless-java-products-api-dev-products",
+                "MAIN_CLASS": "com.andres.serverless_java_products_api.ServerlessJavaProductsApiApplication",
+                "SPRING_CLOUD_FUNCTION_DEFINITION": "updateProduct"
+              }
+            },
+            "Role": {
+              "Fn::GetAtt": [
+                "IamRoleLambdaExecution",
+                "Arn"
+              ]
+            }
+          },
+          "DependsOn": [
+            "UpdateProductLogGroup"
+          ]
+        },
+        "CreateProductLambdaVersionSgw4LjeOewv178jQK0ko65EDSLFOHB6wunIJD583MmU": {
+          "Type": "AWS::Lambda::Version",
+          "DeletionPolicy": "Retain",
+          "Properties": {
+            "FunctionName": {
+              "Ref": "CreateProductLambdaFunction"
+            },
+            "CodeSha256": "KxW4tzRnjBHYoNhL/RvyqlDmOstewg6RYo32D91Vah0="
+          }
+        },
+        "DeleteProductLambdaVersiong0yPBvNiIPA3XWVqEZzUpmaijVswBbwgsSqDxwmjfCc": {
+          "Type": "AWS::Lambda::Version",
+          "DeletionPolicy": "Retain",
+          "Properties": {
+            "FunctionName": {
+              "Ref": "DeleteProductLambdaFunction"
+            },
+            "CodeSha256": "KxW4tzRnjBHYoNhL/RvyqlDmOstewg6RYo32D91Vah0="
+          }
+        },
+        "GetProductLambdaVersionsquQW001AVor4yThhIzOCUamoe4JzmmF5CgJ83E": {
+          "Type": "AWS::Lambda::Version",
+          "DeletionPolicy": "Retain",
+          "Properties": {
+            "FunctionName": {
+              "Ref": "GetProductLambdaFunction"
+            },
+            "CodeSha256": "KxW4tzRnjBHYoNhL/RvyqlDmOstewg6RYo32D91Vah0="
+          }
+        },
+        "ListProductLambdaVersionxTn28B5UnxOCwAN8W6tMrKkKkzl7TiIeUV0gMeCApU": {
+          "Type": "AWS::Lambda::Version",
+          "DeletionPolicy": "Retain",
+          "Properties": {
+            "FunctionName": {
+              "Ref": "ListProductLambdaFunction"
+            },
+            "CodeSha256": "KxW4tzRnjBHYoNhL/RvyqlDmOstewg6RYo32D91Vah0="
+          }
+        },
+        "UpdateProductLambdaVersionPqrcyZVo3j3aaWv60AR7salszDu1wBfMIzMgWZ38F9U": {
+          "Type": "AWS::Lambda::Version",
+          "DeletionPolicy": "Retain",
+          "Properties": {
+            "FunctionName": {
+              "Ref": "UpdateProductLambdaFunction"
+            },
+            "CodeSha256": "KxW4tzRnjBHYoNhL/RvyqlDmOstewg6RYo32D91Vah0="
+          }
+        },
+        "ApiGatewayRestApi": {
+          "Type": "AWS::ApiGateway::RestApi",
+          "Properties": {
+            "Name": "dev-serverless-java-products-api",
+            "EndpointConfiguration": {
+              "Types": [
+                "EDGE"
+              ]
+            },
+            "Policy": ""
+          }
+        },
+        "ApiGatewayResourceProducts": {
+          "Type": "AWS::ApiGateway::Resource",
+          "Properties": {
+            "ParentId": {
+              "Fn::GetAtt": [
+                "ApiGatewayRestApi",
+                "RootResourceId"
+              ]
+            },
+            "PathPart": "products",
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            }
+          }
+        },
+        "ApiGatewayResourceProductsIdVar": {
+          "Type": "AWS::ApiGateway::Resource",
+          "Properties": {
+            "ParentId": {
+              "Ref": "ApiGatewayResourceProducts"
+            },
+            "PathPart": "{id}",
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            }
+          }
+        },
+        "ApiGatewayMethodProductsPost": {
+          "Type": "AWS::ApiGateway::Method",
+          "Properties": {
+            "HttpMethod": "POST",
+            "RequestParameters": {},
+            "ResourceId": {
+              "Ref": "ApiGatewayResourceProducts"
+            },
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            },
+            "ApiKeyRequired": "<REDACTED>",
+            "AuthorizationType": "NONE",
+            "Integration": {
+              "IntegrationHttpMethod": "POST",
+              "Type": "AWS_PROXY",
+              "Uri": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":apigateway:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":lambda:path/2015-03-31/functions/",
+                    {
+                      "Fn::GetAtt": [
+                        "CreateProductLambdaFunction",
+                        "Arn"
+                      ]
+                    },
+                    "/invocations"
+                  ]
+                ]
+              }
+            },
+            "MethodResponses": []
+          },
+          "DependsOn": [
+            "CreateProductLambdaPermissionApiGateway"
+          ]
+        },
+        "ApiGatewayMethodProductsIdVarDelete": {
+          "Type": "AWS::ApiGateway::Method",
+          "Properties": {
+            "HttpMethod": "DELETE",
+            "RequestParameters": {},
+            "ResourceId": {
+              "Ref": "ApiGatewayResourceProductsIdVar"
+            },
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            },
+            "ApiKeyRequired": "<REDACTED>",
+            "AuthorizationType": "NONE",
+            "Integration": {
+              "IntegrationHttpMethod": "POST",
+              "Type": "AWS_PROXY",
+              "Uri": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":apigateway:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":lambda:path/2015-03-31/functions/",
+                    {
+                      "Fn::GetAtt": [
+                        "DeleteProductLambdaFunction",
+                        "Arn"
+                      ]
+                    },
+                    "/invocations"
+                  ]
+                ]
+              }
+            },
+            "MethodResponses": []
+          },
+          "DependsOn": [
+            "DeleteProductLambdaPermissionApiGateway"
+          ]
+        },
+        "ApiGatewayMethodProductsIdVarGet": {
+          "Type": "AWS::ApiGateway::Method",
+          "Properties": {
+            "HttpMethod": "GET",
+            "RequestParameters": {},
+            "ResourceId": {
+              "Ref": "ApiGatewayResourceProductsIdVar"
+            },
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            },
+            "ApiKeyRequired": "<REDACTED>",
+            "AuthorizationType": "NONE",
+            "Integration": {
+              "IntegrationHttpMethod": "POST",
+              "Type": "AWS_PROXY",
+              "Uri": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":apigateway:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":lambda:path/2015-03-31/functions/",
+                    {
+                      "Fn::GetAtt": [
+                        "GetProductLambdaFunction",
+                        "Arn"
+                      ]
+                    },
+                    "/invocations"
+                  ]
+                ]
+              }
+            },
+            "MethodResponses": []
+          },
+          "DependsOn": [
+            "GetProductLambdaPermissionApiGateway"
+          ]
+        },
+        "ApiGatewayMethodProductsGet": {
+          "Type": "AWS::ApiGateway::Method",
+          "Properties": {
+            "HttpMethod": "GET",
+            "RequestParameters": {},
+            "ResourceId": {
+              "Ref": "ApiGatewayResourceProducts"
+            },
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            },
+            "ApiKeyRequired": "<REDACTED>",
+            "AuthorizationType": "NONE",
+            "Integration": {
+              "IntegrationHttpMethod": "POST",
+              "Type": "AWS_PROXY",
+              "Uri": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":apigateway:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":lambda:path/2015-03-31/functions/",
+                    {
+                      "Fn::GetAtt": [
+                        "ListProductLambdaFunction",
+                        "Arn"
+                      ]
+                    },
+                    "/invocations"
+                  ]
+                ]
+              }
+            },
+            "MethodResponses": []
+          },
+          "DependsOn": [
+            "ListProductLambdaPermissionApiGateway"
+          ]
+        },
+        "ApiGatewayMethodProductsIdVarPatch": {
+          "Type": "AWS::ApiGateway::Method",
+          "Properties": {
+            "HttpMethod": "PATCH",
+            "RequestParameters": {},
+            "ResourceId": {
+              "Ref": "ApiGatewayResourceProductsIdVar"
+            },
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            },
+            "ApiKeyRequired": "<REDACTED>",
+            "AuthorizationType": "NONE",
+            "Integration": {
+              "IntegrationHttpMethod": "POST",
+              "Type": "AWS_PROXY",
+              "Uri": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":apigateway:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":lambda:path/2015-03-31/functions/",
+                    {
+                      "Fn::GetAtt": [
+                        "UpdateProductLambdaFunction",
+                        "Arn"
+                      ]
+                    },
+                    "/invocations"
+                  ]
+                ]
+              }
+            },
+            "MethodResponses": []
+          },
+          "DependsOn": [
+            "UpdateProductLambdaPermissionApiGateway"
+          ]
+        },
+        "ApiGatewayDeployment1778197577480": {
+          "Type": "AWS::ApiGateway::Deployment",
+          "Properties": {
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            },
+            "StageName": "dev"
+          },
+          "DependsOn": [
+            "ApiGatewayMethodProductsPost",
+            "ApiGatewayMethodProductsIdVarDelete",
+            "ApiGatewayMethodProductsIdVarGet",
+            "ApiGatewayMethodProductsGet",
+            "ApiGatewayMethodProductsIdVarPatch"
+          ]
+        },
+        "CreateProductLambdaPermissionApiGateway": {
+          "Type": "AWS::Lambda::Permission",
+          "Properties": {
+            "FunctionName": {
+              "Fn::GetAtt": [
+                "CreateProductLambdaFunction",
+                "Arn"
+              ]
+            },
+            "Action": "lambda:InvokeFunction",
+            "Principal": "apigateway.amazonaws.com",
+            "SourceArn": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:",
+                  {
+                    "Ref": "AWS::Partition"
+                  },
+                  ":execute-api:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":",
+                  {
+                    "Ref": "ApiGatewayRestApi"
+                  },
+                  "/*/*"
+                ]
+              ]
+            }
+          }
+        },
+        "DeleteProductLambdaPermissionApiGateway": {
+          "Type": "AWS::Lambda::Permission",
+          "Properties": {
+            "FunctionName": {
+              "Fn::GetAtt": [
+                "DeleteProductLambdaFunction",
+                "Arn"
+              ]
+            },
+            "Action": "lambda:InvokeFunction",
+            "Principal": "apigateway.amazonaws.com",
+            "SourceArn": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:",
+                  {
+                    "Ref": "AWS::Partition"
+                  },
+                  ":execute-api:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":",
+                  {
+                    "Ref": "ApiGatewayRestApi"
+                  },
+                  "/*/*"
+                ]
+              ]
+            }
+          }
+        },
+        "GetProductLambdaPermissionApiGateway": {
+          "Type": "AWS::Lambda::Permission",
+          "Properties": {
+            "FunctionName": {
+              "Fn::GetAtt": [
+                "GetProductLambdaFunction",
+                "Arn"
+              ]
+            },
+            "Action": "lambda:InvokeFunction",
+            "Principal": "apigateway.amazonaws.com",
+            "SourceArn": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:",
+                  {
+                    "Ref": "AWS::Partition"
+                  },
+                  ":execute-api:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":",
+                  {
+                    "Ref": "ApiGatewayRestApi"
+                  },
+                  "/*/*"
+                ]
+              ]
+            }
+          }
+        },
+        "ListProductLambdaPermissionApiGateway": {
+          "Type": "AWS::Lambda::Permission",
+          "Properties": {
+            "FunctionName": {
+              "Fn::GetAtt": [
+                "ListProductLambdaFunction",
+                "Arn"
+              ]
+            },
+            "Action": "lambda:InvokeFunction",
+            "Principal": "apigateway.amazonaws.com",
+            "SourceArn": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:",
+                  {
+                    "Ref": "AWS::Partition"
+                  },
+                  ":execute-api:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":",
+                  {
+                    "Ref": "ApiGatewayRestApi"
+                  },
+                  "/*/*"
+                ]
+              ]
+            }
+          }
+        },
+        "UpdateProductLambdaPermissionApiGateway": {
+          "Type": "AWS::Lambda::Permission",
+          "Properties": {
+            "FunctionName": {
+              "Fn::GetAtt": [
+                "UpdateProductLambdaFunction",
+                "Arn"
+              ]
+            },
+            "Action": "lambda:InvokeFunction",
+            "Principal": "apigateway.amazonaws.com",
+            "SourceArn": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:",
+                  {
+                    "Ref": "AWS::Partition"
+                  },
+                  ":execute-api:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":",
+                  {
+                    "Ref": "ApiGatewayRestApi"
+                  },
+                  "/*/*"
+                ]
+              ]
+            }
+          }
+        },
+        "ProductsTable": {
+          "Type": "AWS::DynamoDB::Table",
+          "Properties": {
+            "TableName": "serverless-java-products-api-dev-products",
+            "BillingMode": "PAY_PER_REQUEST",
+            "AttributeDefinitions": [
+              {
+                "AttributeName": "id",
+                "AttributeType": "S"
+              }
+            ],
+            "KeySchema": [
+              {
+                "AttributeName": "id",
+                "KeyType": "HASH"
+              }
+            ]
+          }
+        }
+      },
+      "Outputs": {
+        "ServerlessDeploymentBucketName": {
+          "Value": "serverless-framework-deployments-us-east-1-28f5085e-3583",
+          "Export": {
+            "Name": "sls-serverless-java-products-api-dev-ServerlessDeploymentBucketName"
+          }
+        },
+        "CreateProductLambdaFunctionQualifiedArn": {
+          "Description": "Current Lambda function version",
+          "Value": {
+            "Ref": "CreateProductLambdaVersionSgw4LjeOewv178jQK0ko65EDSLFOHB6wunIJD583MmU"
+          },
+          "Export": {
+            "Name": "sls-serverless-java-products-api-dev-CreateProductLambdaFunctionQualifiedArn"
+          }
+        },
+        "DeleteProductLambdaFunctionQualifiedArn": {
+          "Description": "Current Lambda function version",
+          "Value": {
+            "Ref": "DeleteProductLambdaVersiong0yPBvNiIPA3XWVqEZzUpmaijVswBbwgsSqDxwmjfCc"
+          },
+          "Export": {
+            "Name": "sls-serverless-java-products-api-dev-DeleteProductLambdaFunctionQualifiedArn"
+          }
+        },
+        "GetProductLambdaFunctionQualifiedArn": {
+          "Description": "Current Lambda function version",
+          "Value": {
+            "Ref": "GetProductLambdaVersionsquQW001AVor4yThhIzOCUamoe4JzmmF5CgJ83E"
+          },
+          "Export": {
+            "Name": "sls-serverless-java-products-api-dev-GetProductLambdaFunctionQualifiedArn"
+          }
+        },
+        "ListProductLambdaFunctionQualifiedArn": {
+          "Description": "Current Lambda function version",
+          "Value": {
+            "Ref": "ListProductLambdaVersionxTn28B5UnxOCwAN8W6tMrKkKkzl7TiIeUV0gMeCApU"
+          },
+          "Export": {
+            "Name": "sls-serverless-java-products-api-dev-ListProductLambdaFunctionQualifiedArn"
+          }
+        },
+        "UpdateProductLambdaFunctionQualifiedArn": {
+          "Description": "Current Lambda function version",
+          "Value": {
+            "Ref": "UpdateProductLambdaVersionPqrcyZVo3j3aaWv60AR7salszDu1wBfMIzMgWZ38F9U"
+          },
+          "Export": {
+            "Name": "sls-serverless-java-products-api-dev-UpdateProductLambdaFunctionQualifiedArn"
+          }
+        },
+        "ServiceEndpoint": {
+          "Description": "URL of the service endpoint",
+          "Value": {
+            "Fn::Join": [
+              "",
+              [
+                "https://",
+                {
+                  "Ref": "ApiGatewayRestApi"
+                },
+                ".execute-api.",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ".",
+                {
+                  "Ref": "AWS::URLSuffix"
+                },
+                "/dev"
+              ]
+            ]
+          },
+          "Export": {
+            "Name": "sls-serverless-java-products-api-dev-ServiceEndpoint"
+          }
+        }
+      }
+    }
+  }
+}

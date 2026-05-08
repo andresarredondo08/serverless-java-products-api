@@ -1,0 +1,105 @@
+service: serverless-java-products-api
+
+provider:
+  name: aws
+  runtime: java21
+  region: us-east-1
+  stage: ${opt:stage, 'dev'}
+
+  memorySize: 1024
+  timeout: 20
+
+  environment:
+    PRODUCTS_TABLE: ${self:service}-${self:provider.stage}-products
+    MAIN_CLASS: com.andres.serverless_java_products_api.ServerlessJavaProductsApiApplication
+
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:PutItem
+            - dynamodb:GetItem
+            - dynamodb:Scan
+            - dynamodb:DeleteItem
+          Resource:
+            - arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.PRODUCTS_TABLE}
+
+package:
+  artifact: target/serverless-java-products-api-0.0.1-SNAPSHOT.jar
+
+functions:
+  createProduct:
+    handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker
+
+    events:
+      - http:
+          path: products
+          method: post
+
+    environment:
+      SPRING_CLOUD_FUNCTION_DEFINITION: createProduct
+
+
+  deleteProduct:
+    handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker
+
+    events:
+      - http:
+          path: products/{id}
+          method: delete
+
+    environment:
+      SPRING_CLOUD_FUNCTION_DEFINITION: delete
+
+  getProduct:
+    handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker
+
+    events:
+      - http:
+          path: products/{id}
+          method: get
+
+    environment:
+      SPRING_CLOUD_FUNCTION_DEFINITION: getProduct
+
+  listProduct:
+    handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker
+
+    events:
+      - http:
+          path: products
+          method: get
+
+    environment:
+      SPRING_CLOUD_FUNCTION_DEFINITION: getAllProducts
+
+  updateProduct:
+    handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker
+
+    events:
+      - http:
+          path: products/{id}
+          method: patch
+
+    environment:
+      SPRING_CLOUD_FUNCTION_DEFINITION: updateProduct
+
+
+resources:
+  Resources:
+    ProductsTable:
+      Type: AWS::DynamoDB::Table
+
+      Properties:
+        TableName: ${self:provider.environment.PRODUCTS_TABLE}
+
+        BillingMode: PAY_PER_REQUEST
+
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
