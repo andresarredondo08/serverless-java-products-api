@@ -29,6 +29,9 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Make Maven Wrapper executable
+        run: chmod +x mvnw
+
       - name: Build application
         run: ./mvnw clean package
 
