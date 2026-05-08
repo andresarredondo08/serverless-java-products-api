@@ -96,7 +96,7 @@ public class ProductService {
 
         productRepository.delete(id);
 
-        return "Product deleted succesfully";
+        return "Product deleted successfully";
     }
 
 

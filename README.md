@@ -194,5 +194,17 @@ src/main/java
 - This project uses GitHub Actions to automatically build and deploy the Serverless application
 ---
 
+# Run Test
+
+- ProductServiceTest.java
+- ProductServiceIntegrationTest.java
+
 # Author
 - Andres Felipe Arredondo Hernandez
+
+---
+
+# Screenshots CI/CD
+
+![img.png](img.png)
+
