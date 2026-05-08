@@ -189,5 +189,10 @@ src/main/java
 
 ---
 
+# CI/CD
+
+- This project uses GitHub Actions to automatically build and deploy the Serverless application
+---
+
 # Author
 - Andres Felipe Arredondo Hernandez
